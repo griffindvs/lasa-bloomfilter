@@ -5,6 +5,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <array>
 
 using namespace std;
 
@@ -15,11 +16,11 @@ class BloomFilter {
   vector<bool> bitArr;
 
   public:
-      void BloomFilter(int items, float falseProb);
+      BloomFilter(int items, float falseProb);
       int getArrSize();
       int getHashCount();
-      void bloomAdd(String item);
-      bool bloomContains(String item);
+      void bloomAdd(const uint8_t *data, size_t len);
+      bool bloomContains(const uint8_t *data, size_t len) const;
       void initArr();
 };
 
