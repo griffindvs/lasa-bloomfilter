@@ -1,19 +1,26 @@
 #include "src/bloom.h"
 #include "src/MurmurHash3.h"
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
 int main() {
   cout << "Running" << endl;
-  BloomFilter* filter = new BloomFilter(100, .001);
+  BloomFilter* filter = new BloomFilter(2, .001);
   cout << "Created filter" << endl;
-  const uint8_t* one = new uint8_t(4);
-  filter->bloomAdd(one, 8);
+  string firstString = "one";
+  char firstChar[firstString.length()+1];
+  strcpy(firstChar, firstString.c_str());
+  cout << "strcpy1" << endl;
+  filter->add(firstChar);
   cout << "Added" << endl;
-  const uint8_t* two = new uint8_t(3);
-  filter->bloomAdd(two, 8);
+  string secondString = "two";
+  char secondChar[secondString.length()+1];
+  strcpy(secondChar, secondString.c_str());
+  cout << "strcpy2" << endl;
+  filter->add(secondChar);
   cout << "Removed" << endl;
 
-  cout << "" + filter->bloomContains(one, 8) << endl;
+  cout << "" + filter->contains(firstChar) << endl;
 }

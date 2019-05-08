@@ -1,18 +1,14 @@
-#include "src/bloom.h"
-#include "src/MurmurHash3.h"
+#include "bloom.h"
+#include "MurmurHash3.h"
 
 using namespace std;
 
 // Calculates the hash of a given item
 // Returns an array of two 64 bit hashes
-/* Parameters:
-  *Constant unsigned 8 bit integer for the data
-  (constant prevents modification inside function)
-  *sizeof() operator type (size_t) len for the length of data
-*/
-array<uint64_t, 2> runHash(const uint8_t *data, size_t len) {
-  array<uint64_t, 2> hashVal;
-  MurmurHash3_x64_128(data, len, 0, hashVal.data());
+uint64_t* runHash(char* item) {
+  const char* key = item;
+  uint64_t hashVal[2];
+  MurmurHash3_x64_128(key, (uint64_t)strlen(key), 0, hashVal);
   return hashVal;
 }
 
@@ -21,14 +17,15 @@ inline uint64_t nthHash(uint8_t n, uint64_t hashA, uint64_t hashB, uint64_t arrS
   return (hashA + n * hashB) % arrSize;
 }
 
+// Class constructor
 BloomFilter::BloomFilter(int items, float falseProb) {
   this->falseProb = falseProb;
   this->arrSize = this->getArrSize();
   this->hashCount = this->getHashCount();
-  this->bitArr[arrSize];
-  this->initArr();
+  vector<bool> bitArr;
 }
 
+// Calculates bitset size
 int BloomFilter::getArrSize() {
   int i = this->items;
   int f = this->falseProb;
@@ -38,6 +35,7 @@ int BloomFilter::getArrSize() {
   return s;
 }
 
+// Calculates number of hashes
 int BloomFilter::getHashCount() {
   int s = this->arrSize;
   int i = this->items;
@@ -47,19 +45,21 @@ int BloomFilter::getHashCount() {
   return h;
 }
 
-void BloomFilter::bloomAdd(const uint8_t *data, size_t len) {
-  auto hashVal = runHash(data, len);
+// Add items to the filter
+void BloomFilter::add(char* item) {
+  auto hashVal = runHash(item);
 
   for (int i = 0; i < this->hashCount; i++) {
-    bitArr[nthHash(i, hashVal[0], hashVal[1], bitArr.size())] = true;
+    bitArr.push_back(nthHash(i, hashVal[0], hashVal[1], bitArr.size()));
   }
 }
 
-bool BloomFilter::bloomContains(const uint8_t *data, size_t len) const {
-  auto hashVal = runHash(data, len);
+// Checks for item presence
+bool BloomFilter::contains(char* item) const {
+  auto hashVal = runHash(item);
 
   for (int i = 0; i < this->hashCount; i++) {
-    if (!bitArr[nthHash(i, hashVal[0], hashVal[1], bitArr.size())]) {
+    if (!bitArr.at(nthHash(i, hashVal[0], hashVal[1], bitArr.size()))) {
       return false;
     }
   }

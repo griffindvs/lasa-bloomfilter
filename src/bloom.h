@@ -2,7 +2,7 @@
 #define bloom
 
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <cmath>
 #include <vector>
 #include <array>
@@ -19,9 +19,9 @@ class BloomFilter {
       BloomFilter(int items, float falseProb);
       int getArrSize();
       int getHashCount();
-      void bloomAdd(const uint8_t *data, size_t len);
-      bool bloomContains(const uint8_t *data, size_t len) const;
-      void initArr();
+      void add(char* item);
+      bool contains(char* item) const;
+      //void initArr();
 };
 
 #endif
