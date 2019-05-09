@@ -6,23 +6,33 @@
 using namespace std;
 
 int main() {
-  cout << "Running" << endl;
-  BloomFilter* filter = new BloomFilter(2, .001);
-  cout << "Created filter" << endl;
-  string firstString = "one";
-  char firstChar[firstString.length()+1];
-  strcpy(firstChar, firstString.c_str());
-  cout << "strcpy1" << endl;
-  filter->add(firstChar);
-  cout << "Added" << endl;
-  string secondString = "two";
-  char secondChar[secondString.length()+1];
-  strcpy(secondChar, secondString.c_str());
-  cout << "strcpy2" << endl;
-  filter->add(secondChar);
-  cout << "Added 2" << endl;
-  char test[2] = {'a','b'};
+  cout << "****** Starting BloomFilter Test ******" << endl;
 
-  bool result = filter->contains(test);
-  cout << result << endl;
+  BloomFilter* filter = new BloomFilter(20, .05);
+
+  string toAdd[20] = {"one","two","three","four","five","six","seven","eight","nine",
+  "ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"};
+
+  string toTest[5] = {"taka","koutso","one","forty","fifteen"};
+
+  for (int i=0; i<20; i++) {
+    string s = toAdd[i];
+    char c[s.length()+1];
+    strcpy(c, s.c_str());
+
+    filter->add(c);
+  }
+
+  cout << "Testing values:" << endl;
+
+  for (int i=0; i<5; i++) {
+    string s = toTest[i];
+    char c[s.length()+1];
+    strcpy(c, s.c_str());
+    bool result = filter->contains(c);
+
+    cout << s << ": " <<  result << endl;
+  }
+
+  cout << "****** Bloom Filter Test Complete ******" << endl;
 }
