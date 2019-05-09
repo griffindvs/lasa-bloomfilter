@@ -11,7 +11,7 @@ using namespace std;
 
 class BloomFilter {
   int items, arrSize;
-  uint8_t hashCount;
+  int hashCount;
   float falseProb;
   vector<bool> bitArr;
 
@@ -19,9 +19,9 @@ class BloomFilter {
       BloomFilter(int items, float falseProb);
       int getArrSize();
       int getHashCount();
+      void initArr();
       void add(char* item);
       bool contains(char* item) const;
-      //void initArr();
 };
 
 #endif

@@ -20,7 +20,9 @@ int main() {
   strcpy(secondChar, secondString.c_str());
   cout << "strcpy2" << endl;
   filter->add(secondChar);
-  cout << "Removed" << endl;
+  cout << "Added 2" << endl;
+  char test[2] = {'a','b'};
 
-  cout << "" + filter->contains(firstChar) << endl;
+  bool result = filter->contains(test);
+  cout << result << endl;
 }
