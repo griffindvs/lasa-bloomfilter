@@ -1,38 +1,52 @@
 #include "src/bloom.h"
 #include "src/MurmurHash3.h"
 #include <iostream>
+#include <fstream>
 #include <cstring>
 
 using namespace std;
 
 int main() {
   cout << "****** Starting BloomFilter Test ******" << endl;
+  BloomFilter* filter = new BloomFilter(258001, .05);
 
-  BloomFilter* filter = new BloomFilter(20, .05);
+  // Open fstream file
+  fstream file;
+  file.open("names.csv");
 
-  string toAdd[20] = {"one","two","three","four","five","six","seven","eight","nine",
-  "ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"};
+  //Check for opening error
+  if (file.fail()) {
+      cout << "Error opening file" << endl;
+      exit(1);
+  }
 
-  string toTest[5] = {"taka","koutso","one","forty","fifteen"};
-
-  for (int i=0; i<20; i++) {
-    string s = toAdd[i];
-    char c[s.length()+1];
-    strcpy(c, s.c_str());
+  string addStr;
+  while (getline(file, addStr)) {
+    char c[addStr.length()+1];
+    strcpy(c, addStr.c_str());
 
     filter->add(c);
   }
 
-  cout << "Testing values:" << endl;
+  file.close();
 
-  for (int i=0; i<5; i++) {
-    string s = toTest[i];
-    char c[s.length()+1];
-    strcpy(c, s.c_str());
-    bool result = filter->contains(c);
+  cout << "Begin testing values. Enter -1 to finish." << endl << endl;
 
-    cout << s << ": " <<  result << endl;
+  string check;
+
+  while (check.compare("-1") != 0) {
+    cin >> check;
+
+    char charCheck[check.length()+1];
+    strcpy(charCheck, check.c_str());
+
+    if (check.compare("-1") != 0) {
+      bool res = filter->contains(charCheck);
+      string result;
+      res ? result="Likely present" : result="Not present";
+      cout << check << ": " << result << endl << endl;
+    }
   }
 
-  cout << "****** Bloom Filter Test Complete ******" << endl;
+  cout << "****** BloomFilter Test Complete ******" << endl;
 }

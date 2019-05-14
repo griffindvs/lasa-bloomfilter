@@ -4,7 +4,8 @@
 #include <bitset>
 using namespace std;
 
-string hashCharArray(bitset<128> name){
+string hashCharArray(char* nameArr){
+  bitset<128> name = conToBin(*nameArr);
   //note count is bitset function built into c++ that returns number 1's in bitset
   string numOne = to_string(name.count());
   int exponents;
@@ -18,6 +19,7 @@ string hashCharArray(bitset<128> name){
   hash = numOne + strEx;
   return hash;
 }
+
 bitset<128> conToBin(char nameChar[]){
     int sizeNc = *(&nameChar + 1) - nameChar;
     int nameNum[sizeNc];
