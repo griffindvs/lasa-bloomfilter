@@ -3,6 +3,8 @@
 #include <iterator>
 #include <bitset>
 
+using namespace std;
+
 bitset<128> conToBin(char nameChar[]){
     int sizeNc = *(&nameChar + 1) - nameChar;
     int nameNum[sizeNc];

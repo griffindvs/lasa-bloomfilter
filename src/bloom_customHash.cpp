@@ -6,7 +6,7 @@ using namespace std;
 // Calculates the hash of a given item
 // Returns an array of two 64 bit hashes
 string runHash(char* item) {
-  const char* key = item;
+  char* key = item;
   string hashVal;
   hashVal = hashCharArray(key);
   return hashVal;
@@ -14,7 +14,7 @@ string runHash(char* item) {
 
 // Returns the output of the nth hash function. Modulo length of the array for index.
 uint64_t nthHash(int n, string hash, uint64_t arrSize) {
-  return ((uint128_t)hash * n) % arrSize;
+  return (stoi(hash) * n) % arrSize;
 }
 
 // Class constructor
