@@ -61,13 +61,53 @@ int main(int argc, char const *argv[])
     //sockets now connected successfully, hello messages exchanged,
     //time to read data for bloom filter
     
-    cout << "Awaiting username from client..." << endl;
+    //****************
+    //
+  BloomFilter* filter = new BloomFilter(258001, .05);
+
+  // Open fstream file
+  fstream file;
+  file.open("names.csv");
+
+  //Check for opening error
+  if (file.fail()) {
+      cout << "Error opening file" << endl;
+      exit(1);
+  }
+
+  string addStr;
+  while (getline(file, addStr)) {
+    char c[addStr.length()+1];
+    strcpy(c, addStr.c_str());
+
+    filter->add(c);
+  }
+
+  file.close();
+
+  begin = "Begin testing values. Enter -1 to finish.";
+  cout << begin << endl << endl;
+  send(new_socket , begin , strlen(begin) , 0 );
+
+  string check;
+
+  while (check.compare("-1") != 0) {
     valread = read(new_socket, buffer, 1024);
-    cout << "Username is " << buffer << endl;
-    
-    //next, send username to bloomfilter
-    
-    
+    check = buffer;
+
+    if (check.compare("-1") != 0) {
+      bool res = filter->contains(buffer);
+      string result;
+      res ? result="Likely present" : result="Not present";
+      cout << check << ": " << result << endl << endl;
+      string send = check + ": " + result;
+      char charSend[send.length()+1];
+      strcpy(charSend, send.c_str());
+      send(new_socket , charSend , strlen(charSend) , 0 );
+    }
+  }
+    //
+    //****************
     
     return 0; 
 } 

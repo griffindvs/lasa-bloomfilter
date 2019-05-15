@@ -46,12 +46,21 @@ int main(int argc, char const *argv[])
     //sockets now connected successfully, hello messages exchanged,
     //time to prompt data for bloom filter
     
-    char usrname[50];
-    cout << "Enter username: ";
-    cin >> usrname;
-    cout << "Checking database for " << name << "..." << endl;
-    send(sock, usrname,strlen(usrname), 0);
-    valread = read(sock, buffer, 1024);
+    valread = read( sock , buffer, 1024);
+    cout << buffer << endl << endl; // message from server to enter names
+    
+    string name;
+    while(name.compare("-1") != 0)
+    {
+      cout << "Enter username: ";
+      cin >> name;
+      char charName[name.length()+1];//convert name to char array
+      strcpy(charName, name.c_str());
+      cout << "Checking database for " << name << "..." << endl;
+      send(sock, name,strlen(name), 0);
+      valread = read(sock, buffer, 1024);
+      cout << buffer << endl;
+    }
     
     return 0; 
 } 
