@@ -1,4 +1,4 @@
-#include "src/bloom.h"
+#include "src/bloom_customHash.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>
