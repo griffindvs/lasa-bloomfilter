@@ -1,0 +1,6 @@
+## Ignoring compiled files
+customHash/*.o
+customHash/*.a
+
+mmh3/*.o
+mmh3/*.a
