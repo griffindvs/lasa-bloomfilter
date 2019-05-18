@@ -124,7 +124,7 @@ int main() {
   cout << endl << "Filter Size: " << sizeof(smallFilter) << " bytes" << endl;
 
   // Bloom filter test with large dataset
-  cout << endl << "Begin large dataset example. Enter -1 to finish." << endl << endl;
+  cout << endl << "Begin large dataset bloom filter example. Enter -1 to finish." << endl << endl;
   string check3; // Initialize string for input
 
   while (check3.compare("-1") != 0) {
