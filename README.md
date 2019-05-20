@@ -4,7 +4,7 @@ This is a C++ implementation of a [bloom filter](https://en.wikipedia.org/wiki/B
 
 ## Compilation & Testing
 
-### Building the Static Library in Unix (Git Bash on Windows)
+### Building the Static Library in Windows
 1. Compile each individual C++ file in the terminal using `gcc -c src/bloom.cpp src/MurmurHash3.cpp` in the `mmh3` directory
    - The `-c` switch tells GCC to compile and assemble but not link the files
    - The `*.cpp` will compile every C++ file in the src folder
