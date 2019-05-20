@@ -5,8 +5,6 @@
 #include <netinet/in.h>
 #include <string.h>
 #define PORT 8080
-#include "src/bloom.h"
-#include "src/MurmurHash3.h"
 
 int main(int argc, char const *argv[])
 {
