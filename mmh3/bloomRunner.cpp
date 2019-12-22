@@ -121,7 +121,7 @@ int main() {
     }
   }
 
-  cout << endl << "Filter Size: " << sizeof(smallFilter) << " bytes" << endl;
+  cout << endl << "Filter Size: " << sizeof(*smallFilter) << " bytes" << endl;
 
   // Bloom filter test with large dataset
   cout << endl << "Begin large dataset bloom filter example. Enter -1 to finish." << endl << endl;
@@ -153,7 +153,7 @@ int main() {
     }
   }
 
-  cout << endl << "Filter Size: " << sizeof(fullFilter) << " bytes" << endl;
+  cout << endl << "Filter Size: " << sizeof(*fullFilter) << " bytes" << endl;
 
   cout << endl << "****** BloomFilter Test Complete ******" << endl;
 }
